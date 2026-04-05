@@ -61,18 +61,20 @@
             background: linear-gradient(
                 180deg,
                 var(--dawn-top) 0%,
-                var(--dawn-mid) 20%,
-                var(--dawn-warm) 45%,
-                var(--dawn-orange) 65%,
-                var(--dawn-yellow) 82%,
+                var(--dawn-mid) 15%,
+                var(--dawn-warm) 35%,
+                var(--dawn-orange) 55%,
+                var(--dawn-yellow) 72%,
+                var(--dawn-light) 88%,
                 var(--dawn-light) 100%
             );
-            animation: dawnRise 4s ease-out forwards;
+            animation: dawnRise 5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             opacity: 0;
         }
 
         @keyframes dawnRise {
             0% { opacity: 0; }
+            40% { opacity: 0.4; }
             100% { opacity: 1; }
         }
 
@@ -86,7 +88,7 @@
             height: 600px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(240,194,127,0.8) 0%, rgba(212,167,69,0.3) 40%, transparent 70%);
-            animation: sunPulse 6s ease-in-out infinite, sunAppear 3s 1s ease-out forwards;
+            animation: sunPulse 6s ease-in-out infinite, sunAppear 4s 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             opacity: 0;
             filter: blur(40px);
         }
@@ -97,7 +99,8 @@
         }
 
         @keyframes sunAppear {
-            0% { opacity: 0; bottom: -30%; }
+            0% { opacity: 0; bottom: -25%; }
+            60% { opacity: 0.6; }
             100% { opacity: 1; bottom: -10%; }
         }
 
@@ -110,11 +113,12 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            animation: raysAppear 3s 2s ease-out forwards;
+            animation: raysAppear 4s 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes raysAppear {
             0% { opacity: 0; }
+            60% { opacity: 0.15; }
             100% { opacity: 0.4; }
         }
 
@@ -166,12 +170,13 @@
             z-index: 2;
             margin-bottom: 2.5rem;
             opacity: 0;
-            animation: crossReveal 2s 1.5s ease-out forwards;
+            animation: crossReveal 2.5s 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes crossReveal {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            60% { opacity: 0.7; transform: translateY(5px) scale(0.99); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .cross {
@@ -212,11 +217,12 @@
             position: relative;
             z-index: 2;
             opacity: 0;
-            animation: textReveal 2s 2.2s ease-out forwards;
+            animation: textReveal 2.5s 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
         }
 
         @keyframes textReveal {
             0% { opacity: 0; transform: translateY(40px); }
+            50% { opacity: 0.5; transform: translateY(10px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -290,20 +296,15 @@
         /* ── MESSAGE SECTION ── */
         .message-section {
             position: relative;
-            background: linear-gradient(180deg, var(--dawn-light) 0%, var(--white) 30%);
+            background: linear-gradient(
+                180deg,
+                var(--dawn-light) 0%,
+                #fef8f0 8%,
+                var(--white) 25%,
+                var(--white) 100%
+            );
             padding: 8rem 2rem;
             text-align: center;
-        }
-
-        .message-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(180deg, var(--dawn-yellow), var(--dawn-light));
-            opacity: 0.3;
         }
 
         .ornament {
@@ -348,6 +349,7 @@
 
         @keyframes fadeUp {
             0% { opacity: 0; transform: translateY(30px); }
+            40% { opacity: 0.4; transform: translateY(12px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
@@ -363,7 +365,12 @@
 
         /* ── SCRIPTURE CARDS ── */
         .scriptures {
-            background: var(--white);
+            background: linear-gradient(
+                180deg,
+                var(--white) 0%,
+                var(--white) 60%,
+                #fef8f0 100%
+            );
             padding: 4rem 2rem 8rem;
         }
 
@@ -414,8 +421,18 @@
         /* ── CLOSING ── */
         .closing {
             position: relative;
-            background: linear-gradient(180deg, var(--white) 0%, #1a0a2e 100%);
-            padding: 6rem 2rem 8rem;
+            background: linear-gradient(
+                180deg,
+                #fef8f0 0%,
+                #f5e6d0 8%,
+                #c9a87c 18%,
+                #8b6b4a 28%,
+                #4a3356 42%,
+                #2a1840 58%,
+                #1a0a2e 75%,
+                #0f0620 100%
+            );
+            padding: 10rem 2rem 8rem;
             text-align: center;
             overflow: hidden;
         }
@@ -574,8 +591,8 @@
             50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
         }
 
-        /* Title shimmer effect */
-        .hero-text h1 {
+        /* Title shimmer effect — applied after reveal via JS */
+        .hero-text h1.shimmer-active {
             background: linear-gradient(
                 90deg,
                 var(--gold-pale) 0%,
@@ -588,18 +605,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: titleShimmer 6s ease-in-out infinite, textReveal 2s 2.2s ease-out forwards;
-            text-shadow: none;
+            animation: titleShimmer 8s ease-in-out infinite;
         }
 
         @keyframes titleShimmer {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-        }
-
-        /* Closing section enhanced */
-        .closing {
-            background: linear-gradient(180deg, var(--white) 0%, #0f0620 50%, #060212 100%);
         }
 
         .closing-nebula {
@@ -763,20 +774,26 @@
             starsEl.appendChild(s);
         }
 
-        // Scroll-triggered reveal animations
+        // Activate title shimmer after the reveal animation completes
+        setTimeout(() => {
+            const h1 = document.querySelector('.hero-text h1');
+            if (h1) h1.classList.add('shimmer-active');
+        }, 5200); // 2.5s delay + 2.5s animation
+
+        // Scroll-triggered reveal animations with smooth stagger
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const delay = Array.from(entry.target.parentElement.children)
-                        .filter(c => c.hasAttribute('data-animate'))
-                        .indexOf(entry.target) * 200;
+                    const siblings = Array.from(entry.target.parentElement.children)
+                        .filter(c => c.hasAttribute('data-animate'));
+                    const idx = siblings.indexOf(entry.target);
                     setTimeout(() => {
                         entry.target.classList.add('visible');
-                    }, delay);
+                    }, idx * 250);
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
     </script>
