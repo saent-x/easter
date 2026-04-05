@@ -227,9 +227,9 @@
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--gold-pale);
-            text-shadow: 0 0 40px rgba(212,167,69,0.4), 0 2px 10px rgba(0,0,0,0.3);
             line-height: 1.1;
             margin-bottom: 0.3em;
+            filter: drop-shadow(0 0 40px rgba(212,167,69,0.4)) drop-shadow(0 2px 10px rgba(0,0,0,0.3));
         }
 
         .hero-text .subtitle {
@@ -459,9 +459,163 @@
             animation: twinkle 3s ease-in-out infinite;
         }
 
+        .star.large {
+            width: 4px;
+            height: 4px;
+            box-shadow: 0 0 6px 2px rgba(250,240,209,0.6), 0 0 15px 4px rgba(212,167,69,0.3);
+        }
+
+        .star.medium {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 4px 1px rgba(250,240,209,0.4);
+        }
+
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes twinkleBright {
+            0%, 100% { opacity: 0.2; transform: scale(0.6); filter: brightness(1); }
+            50% { opacity: 1; transform: scale(1.4); filter: brightness(1.5); }
+        }
+
+        /* Hero sparkles */
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkleAnim ease-in-out infinite;
+        }
+
+        .sparkle::before, .sparkle::after {
+            content: '';
+            position: absolute;
+            background: var(--gold-light);
+        }
+
+        .sparkle::before {
+            width: 2px;
+            height: 12px;
+            top: -6px;
+            left: -1px;
+            border-radius: 1px;
+        }
+
+        .sparkle::after {
+            width: 12px;
+            height: 2px;
+            top: -1px;
+            left: -6px;
+            border-radius: 1px;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            20% { opacity: 1; transform: scale(1) rotate(15deg); }
+            50% { opacity: 0.8; transform: scale(0.8) rotate(30deg); }
+            80% { opacity: 1; transform: scale(1.1) rotate(45deg); }
+        }
+
+        /* Shimmer overlay on hero */
+        .shimmer-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(240,215,140,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(240,215,140,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(240,194,127,0.1) 0%, transparent 40%);
+            animation: shimmerPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmerPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Glowing border on scripture cards */
+        .scripture-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, rgba(212,167,69,0.4), transparent, rgba(212,167,69,0.2));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .scripture-card {
+            position: relative;
+        }
+
+        .scripture-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Cross enhanced glow */
+        .cross-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,167,69,0.3) 0%, rgba(212,167,69,0.1) 40%, transparent 70%);
+            animation: crossGlowPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes crossGlowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
+
+        /* Title shimmer effect */
+        .hero-text h1 {
+            background: linear-gradient(
+                90deg,
+                var(--gold-pale) 0%,
+                #fff8e7 25%,
+                var(--gold-light) 50%,
+                #fff8e7 75%,
+                var(--gold-pale) 100%
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShimmer 6s ease-in-out infinite, textReveal 2s 2.2s ease-out forwards;
+            text-shadow: none;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Closing section enhanced */
+        .closing {
+            background: linear-gradient(180deg, var(--white) 0%, #0f0620 50%, #060212 100%);
+        }
+
+        .closing-nebula {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 30% 60%, rgba(61,28,86,0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 40%, rgba(139,58,98,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(212,167,69,0.08) 0%, transparent 40%);
+            animation: nebulaShift 12s ease-in-out infinite;
+        }
+
+        @keyframes nebulaShift {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
         }
 
         /* Responsive */
@@ -489,9 +643,12 @@
             <div class="ray"></div>
             <div class="ray"></div>
         </div>
+        <div class="shimmer-overlay"></div>
         <div class="particles" id="particles"></div>
+        <div id="sparkles"></div>
 
         <div class="cross-container">
+            <div class="cross-glow"></div>
             <div class="cross"></div>
         </div>
 
@@ -547,6 +704,7 @@
 
     <!-- CLOSING -->
     <section class="closing">
+        <div class="closing-nebula"></div>
         <div class="closing-stars" id="stars"></div>
         <div class="closing-message" data-animate>
             <h3>Happy Easter</h3>
@@ -555,28 +713,53 @@
     </section>
 
     <script>
-        // Generate floating particles
+        // Generate floating particles (more of them)
         const particlesEl = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 60; i++) {
             const p = document.createElement('div');
             p.classList.add('particle');
             p.style.left = Math.random() * 100 + '%';
-            p.style.top = (50 + Math.random() * 50) + '%';
-            p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-            p.style.animationDuration = (6 + Math.random() * 10) + 's';
-            p.style.animationDelay = (Math.random() * 8) + 's';
+            p.style.top = (40 + Math.random() * 60) + '%';
+            p.style.width = p.style.height = (2 + Math.random() * 5) + 'px';
+            p.style.animationDuration = (5 + Math.random() * 12) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            if (Math.random() > 0.7) {
+                p.style.background = '#fff8e7';
+                p.style.boxShadow = '0 0 6px 2px rgba(255,248,231,0.4)';
+            }
             particlesEl.appendChild(p);
         }
 
-        // Generate twinkling stars
+        // Generate sparkles around the cross
+        const sparklesEl = document.getElementById('sparkles');
+        for (let i = 0; i < 15; i++) {
+            const sp = document.createElement('div');
+            sp.classList.add('sparkle');
+            sp.style.position = 'absolute';
+            sp.style.left = (35 + Math.random() * 30) + '%';
+            sp.style.top = (20 + Math.random() * 40) + '%';
+            sp.style.animationDuration = (2 + Math.random() * 4) + 's';
+            sp.style.animationDelay = (2 + Math.random() * 6) + 's';
+            sp.style.zIndex = '3';
+            sparklesEl.appendChild(sp);
+        }
+
+        // Generate twinkling stars (massively increased, with size variety)
         const starsEl = document.getElementById('stars');
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 200; i++) {
             const s = document.createElement('div');
             s.classList.add('star');
+            const rand = Math.random();
+            if (rand > 0.92) {
+                s.classList.add('large');
+                s.style.animationName = 'twinkleBright';
+            } else if (rand > 0.75) {
+                s.classList.add('medium');
+            }
             s.style.left = Math.random() * 100 + '%';
-            s.style.top = (30 + Math.random() * 70) + '%';
-            s.style.animationDelay = (Math.random() * 5) + 's';
-            s.style.animationDuration = (2 + Math.random() * 3) + 's';
+            s.style.top = (15 + Math.random() * 85) + '%';
+            s.style.animationDelay = (Math.random() * 8) + 's';
+            s.style.animationDuration = (1.5 + Math.random() * 4) + 's';
             starsEl.appendChild(s);
         }
 
